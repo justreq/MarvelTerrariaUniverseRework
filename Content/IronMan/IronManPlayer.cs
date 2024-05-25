@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ModLoader;
 
@@ -52,7 +53,12 @@ public class IronManPlayer : ModPlayer
     public bool Flying = false;
     public bool Hovering => Flying && InputVector == Vector2.Zero;
 
-    public static Vector2 InputVector => new Vector2((PlayerInput.Triggers.Current.Right ? 1 : 0) - (PlayerInput.Triggers.Current.Left ? 1 : 0), (PlayerInput.Triggers.Current.Down ? 1 : 0) - (PlayerInput.Triggers.Current.Up ? 1 : 0)).SafeNormalize(Vector2.Zero);
+    // 1 when the player is moving to a specific direction, 0 otherwise
+    int dirleft, dirright, dirup, dirdown;
+    Point mousePosChunk; // divide the screen into 4x4 tiles grid, and send the location of the mouse 
+    const int mouseChunkSize = 64;
+
+    public Vector2 InputVector => new Vector2(dirright - dirleft, dirdown - dirup); //Player.whoAmI != Main.myPlayer ? Vector2.Zero : new Vector2((PlayerInput.Triggers.Current.Right ? 1 : 0) - (PlayerInput.Triggers.Current.Left ? 1 : 0), (PlayerInput.Triggers.Current.Down ? 1 : 0) - (PlayerInput.Triggers.Current.Up ? 1 : 0)).SafeNormalize(Vector2.Zero);
 
     public override void ResetEffects()
     {
@@ -82,6 +88,13 @@ public class IronManPlayer : ModPlayer
 
         if (Flying)
         {
+            if (Main.myPlayer == Player.whoAmI)
+            {
+                dirleft = PlayerInput.Triggers.Current.Left ? 1 : 0;
+                dirright = PlayerInput.Triggers.Current.Right ? 1 : 0;
+                dirup = PlayerInput.Triggers.Current.Up ? 1 : 0;
+                dirdown = PlayerInput.Triggers.Current.Down ? 1 : 0;
+            }
             Player.velocity = Vector2.Lerp(Player.velocity, InputVector * 10f, 0.1f);
         }
     }
@@ -101,7 +114,17 @@ public class IronManPlayer : ModPlayer
 
         if (Flying)
         {
-            Vector2 mouseOffset = Main.MouseWorld - Player.Center;
+            Vector2 mouseOffset;
+            Vector2 off = new Vector2(mouseChunkSize / 2, -mouseChunkSize / 2);
+            if (Player.whoAmI == Main.myPlayer)
+            {
+                mouseOffset = Main.MouseWorld - Player.Center;
+                mousePosChunk = ((mouseOffset - off) / mouseChunkSize).ToPoint();
+            }
+            else
+            {
+                mouseOffset = mousePosChunk.ToVector2() * mouseChunkSize + off;
+            }
 
             Player.fullRotationOrigin = Player.Hitbox.Size() / 2;
             Player.bodyFrame.Y = 0;
@@ -146,10 +169,18 @@ public class IronManPlayer : ModPlayer
         packet.Write((byte)ArmorFrame[0]);
         packet.Write((byte)ArmorFrame[1]);
         packet.Write((byte)ArmorFrame[2]);
-        packet.Write(FaceplateOn);
-        packet.Write(FaceplateMoving);
         packet.Write((byte)FaceplateFrameDelay);
-        packet.Write(Flying);
+        BitsByte flags1 = 0;
+        flags1[0] = FaceplateOn;
+        flags1[1] = FaceplateMoving;
+        flags1[2] = Flying;
+        flags1[3] = dirleft == 1;
+        flags1[4] = dirright == 1;
+        flags1[5] = dirup == 1;
+        flags1[6] = dirdown == 1;
+        packet.Write((byte)flags1);
+        packet.Write7BitEncodedInt(mousePosChunk.X);
+        packet.Write7BitEncodedInt(mousePosChunk.Y);
         packet.Send(toWho, fromWho);
     }
 
@@ -159,10 +190,16 @@ public class IronManPlayer : ModPlayer
         ArmorFrame[0] = reader.ReadByte();
         ArmorFrame[1] = reader.ReadByte();
         ArmorFrame[2] = reader.ReadByte();
-        FaceplateOn = reader.ReadBoolean();
-        FaceplateMoving = reader.ReadBoolean();
         FaceplateFrameDelay = reader.ReadByte();
-        Flying = reader.ReadBoolean();
+        BitsByte flags1 = reader.ReadByte();
+        FaceplateOn = flags1[0];
+        FaceplateMoving = flags1[1];
+        Flying = flags1[2];
+        dirleft = flags1[3] ? 1 : 0;
+        dirright = flags1[4] ? 1 : 0;
+        dirup = flags1[5] ? 1 : 0;
+        dirdown = flags1[6] ? 1 : 0;
+        mousePosChunk = new Point(reader.Read7BitEncodedInt(), reader.Read7BitEncodedInt());
     }
 
     public override void CopyClientState(ModPlayer targetCopy)
@@ -176,6 +213,11 @@ public class IronManPlayer : ModPlayer
         clone.FaceplateMoving = FaceplateMoving;
         clone.FaceplateFrameDelay = FaceplateFrameDelay;
         clone.Flying = Flying;
+        clone.dirleft = dirleft;
+        clone.dirright = dirright;
+        clone.dirup = dirup;
+        clone.dirdown = dirdown;
+        clone.mousePosChunk = mousePosChunk;
     }
 
     public override void SendClientChanges(ModPlayer clientPlayer)
@@ -189,6 +231,13 @@ public class IronManPlayer : ModPlayer
         clone.FaceplateOn != FaceplateOn ||
         clone.FaceplateMoving != FaceplateMoving ||
         clone.FaceplateFrameDelay != FaceplateFrameDelay ||
+
+        clone.dirleft != dirleft ||
+        clone.dirright != dirright ||
+        clone.dirup != dirup ||
+        clone.dirdown != dirdown ||
+        clone.mousePosChunk != mousePosChunk ||
+
         clone.Flying != Flying) SyncPlayer(toWho: -1, fromWho: Main.myPlayer, newPlayer: false);
     }
 }
