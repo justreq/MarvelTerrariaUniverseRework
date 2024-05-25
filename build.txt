@@ -1,0 +1,3 @@
+displayName = Marvel Terraria Universe
+author = Req
+version = 0.1

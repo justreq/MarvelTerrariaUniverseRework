@@ -1,0 +1,70 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<!-- Import tModLoader mod properties -->
+	<Import Project="..\tModLoader.targets" />
+
+	<!-- General -->
+	<PropertyGroup>
+		
+	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove="Content\IronMan\Accessories\ArsenalCrudeFlamethrower.png" />
+	  <None Remove="Content\IronMan\Accessories\ArsenalCrudeMissile.png" />
+	  <None Remove="Content\IronMan\Accessories\ArsenalFlares.png" />
+	  <None Remove="Content\IronMan\Accessories\ArsenalLaserSystem.png" />
+	  <None Remove="Content\IronMan\Accessories\ArsenalMicroGun.png" />
+	  <None Remove="Content\IronMan\Accessories\ArsenalMicroMissile.png" />
+	  <None Remove="Content\IronMan\Accessories\ArsenalPropelledGrenades.png" />
+	  <None Remove="Content\IronMan\Accessories\ArsenalRepulsor.png" />
+	  <None Remove="Content\IronMan\Accessories\ArsenalSideWinders.png" />
+	  <None Remove="Content\IronMan\Accessories\ArsenalSpreadGrenades.png" />
+	  <None Remove="Content\IronMan\Accessories\ArsenalUnibeam.png" />
+	  <None Remove="Content\IronMan\Armor\Mk1Chestplate.png" />
+	  <None Remove="Content\IronMan\Armor\Mk1Chestplate_Body.png" />
+	  <None Remove="Content\IronMan\Armor\Mk1Helmet.png" />
+	  <None Remove="Content\IronMan\Armor\Mk1Helmet_Head.png" />
+	  <None Remove="Content\IronMan\Armor\Mk1Helmet_HeadAlt1.png" />
+	  <None Remove="Content\IronMan\Armor\Mk1Helmet_HeadAlt2.png" />
+	  <None Remove="Content\IronMan\Armor\Mk1Leggings.png" />
+	  <None Remove="Content\IronMan\Armor\Mk1Leggings_Legs.png" />
+	  <None Remove="Content\IronMan\Armor\Mk2Chestplate.png" />
+	  <None Remove="Content\IronMan\Armor\Mk2Chestplate_Body.png" />
+	  <None Remove="Content\IronMan\Armor\Mk2Chestplate_BodyAlt1.png" />
+	  <None Remove="Content\IronMan\Armor\Mk2Helmet.png" />
+	  <None Remove="Content\IronMan\Armor\Mk2Helmet_Head.png" />
+	  <None Remove="Content\IronMan\Armor\Mk2Helmet_HeadAlt1.png" />
+	  <None Remove="Content\IronMan\Armor\Mk2Helmet_HeadAlt2.png" />
+	  <None Remove="Content\IronMan\Armor\Mk2Leggings.png" />
+	  <None Remove="Content\IronMan\Armor\Mk2Leggings_Legs.png" />
+	  <None Remove="Content\IronMan\Armor\Mk2Leggings_LegsAlt1.png" />
+	  <None Remove="Content\IronMan\Armor\Mk3Chestplate.png" />
+	  <None Remove="Content\IronMan\Armor\Mk3Chestplate_Body.png" />
+	  <None Remove="Content\IronMan\Armor\Mk3Chestplate_BodyAlt1.png" />
+	  <None Remove="Content\IronMan\Armor\Mk3Helmet.png" />
+	  <None Remove="Content\IronMan\Armor\Mk3Helmet_Head.png" />
+	  <None Remove="Content\IronMan\Armor\Mk3Helmet_HeadAlt1.png" />
+	  <None Remove="Content\IronMan\Armor\Mk3Helmet_HeadAlt2.png" />
+	  <None Remove="Content\IronMan\Armor\Mk3Leggings.png" />
+	  <None Remove="Content\IronMan\Armor\Mk3Leggings_Legs.png" />
+	  <None Remove="Content\IronMan\Armor\Mk3Leggings_LegsAlt1.png" />
+	  <None Remove="Content\IronMan\Assets\Faceplate0.png" />
+	  <None Remove="Content\IronMan\Assets\Faceplate1.png" />
+	  <None Remove="Content\IronMan\Assets\Faceplate2.png" />
+	  <None Remove="Content\IronMan\Assets\FlightFlame.png" />
+	  <None Remove="Content\IronMan\Assets\FlightFlameAlt.png" />
+	  <None Remove="Content\IronMan\Assets\UI\InventoryBack.png" />
+	  <None Remove="Content\IronMan\Assets\UI\InventoryBackSelected.png" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Include="MultiplayerDebug\Client1\MultDebugTestMod_Client1Debug.csproj" />
+	  <None Include="MultiplayerDebug\Client1\MultDebugTestMod_Client1Debug.csproj.user" />
+	  <None Include="MultiplayerDebug\Client2\MultDebugTestMod_Client2Debug.csproj" />
+	  <None Include="MultiplayerDebug\Client2\MultDebugTestMod_Client2Debug.csproj.user" />
+	  <None Include="MultiplayerDebug\MultiplayerDebug.sln" />
+	  <None Include="MultiplayerDebug\Server\ServerStarter.csproj" />
+	  <None Include="MultiplayerDebug\Server\ServerStarter.csproj.user" />
+	</ItemGroup>
+
+	<!-- References -->
+
+</Project>

@@ -1,0 +1,51 @@
+Items: {
+	Mk1Chestplate: {
+		DisplayName: Mk1 Chestplate
+		Tooltip: ""
+	}
+
+	Mk1Helmet: {
+		DisplayName: Mk1 Helmet
+		Tooltip: ""
+	}
+
+	Mk1Leggings: {
+		DisplayName: Mk1 Leggings
+		Tooltip: ""
+	}
+
+	Mk2Chestplate: {
+		DisplayName: Mk2 Chestplate
+		Tooltip: ""
+	}
+
+	Mk2Helmet: {
+		DisplayName: Mk2 Helmet
+		Tooltip: ""
+	}
+
+	Mk2Leggings: {
+		DisplayName: Mk2 Leggings
+		Tooltip: ""
+	}
+
+	Mk3Chestplate: {
+		DisplayName: Mk3 Chestplate
+		Tooltip: ""
+	}
+
+	Mk3Helmet: {
+		DisplayName: Mk3 Helmet
+		Tooltip: ""
+	}
+
+	Mk3Leggings: {
+		DisplayName: Mk3 Leggings
+		Tooltip: ""
+	}
+}
+
+Keybinds: {
+	"Iron Man: Toggle faceplate.DisplayName": Iron  Man:  Toggle faceplate
+	"Iron Man: Toggle flight.DisplayName": Iron  Man:  Toggle flight
+}
